@@ -7,6 +7,10 @@
 
 #include "tree.h"
 
+typedef struct node_{
+
+};
+
 Tree::Tree() {
 	// TODO Auto-generated constructor stub
 

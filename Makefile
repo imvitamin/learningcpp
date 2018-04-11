@@ -1,21 +1,28 @@
-SOURCES = main.cpp \
-          tree/tree.cpp \
-          linkedlist/linkedlist.cpp 
-HEADERS =
+SOURCES = main.cpp                        \
+          tree/tree.cpp                   \
+          linkedlist/linkedlist.cpp       \
+          sorts/sort.cpp       
+          
+HEADERS = .                               \
+          sorts
+          
 BUILDDIR = build
 
-SOURCE  = $(patsubst %.cpp, $(BUILDDIR)/%.o, $(SOURCES))
+SOURCE_  = $(patsubst %.cpp, %.o, $(SOURCES))
+SOURCE   = $(foreach d, $(SOURCE_), $(BUILDDIR)/$(d) )
+
+HEADER   = $(foreach d, $(HEADERS), -I$(d) )
 
 CXXFLAG = -g -O0 
 
 all: $(SOURCE)
-	-@echo '1 $@ - $<'
-	g++ $(CXXFLAG) -o cxbrg $<
+	-@echo $(SOURCE)
+	g++ $(CXXFLAG) $(HEADER) $(SOURCE) -o cxbrg
 	
 $(BUILDDIR)/%.o: %.cpp
-	-@echo '2: $@ - $<'
+	-@echo '$@ $<'
 	mkdir -p $(@D)
-	g++ $(CXXFLAG) -c -o $@ $< 
+	g++ $(CXXFLAG) $(HEADER) -c -o $@ $< 
 
 clean:
 	rm -rf  $(BUILDDIR)
