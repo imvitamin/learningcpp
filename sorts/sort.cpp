@@ -39,17 +39,64 @@ void quickSort(int left, int right) {
 	if (i >= j)
 		return;
 
+	printf("l %d r %d pivot %d\n", left, right, pivot);
+	p();
+	printf("\n");
 	while (i < j) {
 		while (a[i] < pivot)
 			i++;
 		while (a[j] > pivot)
 			j--;
-		swap(&a[i], &a[j]);
-		i++;
-		j--;
+
+		if (i <= j) {
+			printf("I: %d, J: %d\n", i, j);
+			swap(&a[i], &a[j]);
+			p();
+			printf("\n");
+			i++;
+			j--;
+		}
 	}
 	quickSort(left, i - 1);
 	quickSort(i, right);
+}
+
+void heapify(int nu, int i) {
+	int left = i * 2 + 1;
+	int right = i * 2 + 2;
+	int largest = left;
+
+	printf("nu: %d \n", nu);
+	while (i < nu) {
+		left = i * 2 + 1;
+		right = i * 2 + 2;
+		largest = left;
+
+		if (right < nu && a[right] > a[largest ]) {
+			largest = right;
+		}
+
+		if (largest < nu && a[i] < a[largest]) {
+			swap(&a[i], &a[largest ]);
+		}
+		i = largest ;
+	}
+}
+
+void buildheap() {
+}
+
+void Heapsort() {
+	for (int i = (num / 2 - 1); i >= 0; i--) {
+		heapify(num, i);
+	}
+	printf("zzz\n");p();printf("\n");
+	for (int i = (num - 1); i >= 0; i--) {
+		swap(&a[0], &a[i]);
+		p();printf("\n");
+		heapify(i, 0);
+	}
+
 }
 
 void merge(int left, int mid, int right) {
@@ -121,18 +168,21 @@ Sort::Sort() {
 	printf("%s started\n", __FUNCTION__);
 
 	for (int i = 0; i < num; i++) {
-		a[i] = rand() % 1000;
+		a[i] = rand() % 100;
 	}
+	a[4] = 99;
 
 	printf("\nA : %d:\n", 20 / 11);
 
 	printf("\nArray before sorted:\n");
 	p();
 	fflush(stdout);
-	//	quickSort(0, num - 1);
+	//	quickSort(0, num s- 1);
 	//	mergesort(0, num-1);
 	//	countsort();
-	ShellSort(a, num);
+	//	ShellSort(a, num);
+	Heapsort();
+
 	printf("\nArray after sorted:\n");
 	p();
 
